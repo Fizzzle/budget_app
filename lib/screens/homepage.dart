@@ -1,3 +1,4 @@
+import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:budget_app/controllers/db_helper.dart';
 import 'package:budget_app/screens/add_transaction.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +41,8 @@ class _HomePageState extends State<HomePage> {
         // elevation: 0,
       ),
       backgroundColor: Color(0xffe2e7ef),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      //
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context)
@@ -59,6 +61,7 @@ class _HomePageState extends State<HomePage> {
           size: 32.0,
         ),
       ),
+      //
       body: FutureBuilder<Map>(
         future: dbHelper.fetch(),
         builder: (context, snapshot) {
@@ -83,14 +86,22 @@ class _HomePageState extends State<HomePage> {
                   margin: EdgeInsets.all(12),
                   child: Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      gradient: LinearGradient(
-                        colors: [
-                          Colors.blueAccent,
-                          Colors.blue,
-                        ],
-                      ),
-                    ),
+                        borderRadius: BorderRadius.circular(12),
+                        gradient: LinearGradient(
+                          colors: [
+                            Color.fromARGB(255, 143, 68, 255),
+                            Color.fromARGB(255, 99, 68, 255),
+                            Color.fromARGB(255, 68, 84, 255),
+                            Color.fromARGB(255, 68, 127, 255),
+                          ],
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.grey.shade500,
+                              offset: Offset(4.0, 4.0),
+                              blurRadius: 9.0,
+                              spreadRadius: 7)
+                        ]),
                     padding:
                         EdgeInsets.symmetric(vertical: 20, horizontal: 20.0),
                     child: Column(
@@ -168,9 +179,28 @@ class _HomePageState extends State<HomePage> {
           }
         },
       ),
+      //! bottom bar
+      bottomNavigationBar: AnimatedBottomNavigationBar(
+          icons: iconList,
+          activeIndex: 0,
+          backgroundColor: Colors.white,
+          inactiveColor: Colors.black,
+          activeColor: Colors.grey,
+          gapLocation: GapLocation.center,
+          notchSmoothness: NotchSmoothness.verySmoothEdge,
+          leftCornerRadius: 32,
+          rightCornerRadius: 32,
+          onTap: (index) {}),
+      //other params
     );
   }
 
+  var iconList = [
+    Icons.person,
+    Icons.list,
+  ];
+
+// ! Текст плюса
   Widget cardIncome(String value) {
     return Row(
       children: [
@@ -208,6 +238,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+// ! Текст минуса
   Widget cardExpens(String value) {
     return Row(
       children: [
@@ -260,9 +291,10 @@ class _HomePageState extends State<HomePage> {
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Icon(
-                Icons.arrow_circle_down_outlined,
+                Icons.arrow_downward,
                 size: 33,
                 color: Colors.red[900],
               ),
@@ -300,7 +332,7 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Icon(
-                Icons.arrow_circle_up_outlined,
+                Icons.arrow_upward,
                 size: 33,
                 color: Colors.green[900],
               ),

@@ -1,6 +1,7 @@
 import 'package:budget_app/controllers/db_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:unicons/unicons.dart';
 import 'package:budget_app/ThemeStatic.dart' as Static;
 
 class AddTransaction extends StatefulWidget {
@@ -15,6 +16,7 @@ class _AddTransactionState extends State<AddTransaction> {
   int? amount;
   String note = "Траты";
   String type = "Доход";
+  bool reasonNote = false;
   DateTime selectedDate = DateTime.now();
 
   //
@@ -43,7 +45,7 @@ class _AddTransactionState extends State<AddTransaction> {
           padding: EdgeInsets.all((12.0)),
           children: [
             Text(
-              'Добавить Транзакцию',
+              'Добавить',
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 32.0, fontWeight: FontWeight.w700),
             ),
@@ -55,9 +57,9 @@ class _AddTransactionState extends State<AddTransaction> {
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 icon: Icon(
-                  Icons.add_task,
-                  color: Colors.red,
-                  size: 26,
+                  UniconsLine.money_bill,
+                  // color: Colors.greenAccent,
+                  size: size.height * 0.05,
                 ),
                 hintText: "0",
                 border: InputBorder.none,
@@ -72,25 +74,27 @@ class _AddTransactionState extends State<AddTransaction> {
             SizedBox(
               height: 20,
             ),
-            TextField(
-              maxLength: 24,
-              decoration: InputDecoration(
-                icon: Icon(
-                  Icons.new_releases_outlined,
-                  color: Colors.red,
-                  size: 26,
-                ),
-                hintText: "На что потрачено?",
-                border: InputBorder.none,
-              ),
-              onChanged: (val) {
-                note = val;
-              },
-              style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.w700),
-            ),
-            SizedBox(
-              height: 24,
-            ),
+            reasonNote
+                ? TextField(
+                    maxLength: 24,
+                    decoration: InputDecoration(
+                      icon: Icon(
+                        UniconsLine.notes,
+                        // color: Colors.red,
+                        size: size.height * 0.05,
+                      ),
+                      hintText: "На что потрачено?",
+                      border: InputBorder.none,
+                    ),
+                    onChanged: (val) {
+                      note = val;
+                    },
+                    style:
+                        TextStyle(fontSize: 24.0, fontWeight: FontWeight.w700),
+                  )
+                : SizedBox(
+                    height: 24,
+                  ),
             Row(
               children: [
                 Expanded(
@@ -107,6 +111,7 @@ class _AddTransactionState extends State<AddTransaction> {
                       if (val) {
                         setState(() {
                           type = "Доход";
+                          reasonNote = false;
                         });
                       }
                     },
@@ -130,6 +135,7 @@ class _AddTransactionState extends State<AddTransaction> {
                       if (val) {
                         setState(() {
                           type = "Расход";
+                          reasonNote = true;
                         });
                       }
                     },
@@ -152,9 +158,12 @@ class _AddTransactionState extends State<AddTransaction> {
                     print("Not all Value Proveded");
                   }
                 },
-                child: Text("Внести",
-                    style:
-                        TextStyle(fontSize: 20, fontWeight: FontWeight.w700)))
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 12.0),
+                  child: Text("Внести",
+                      style:
+                          TextStyle(fontSize: 24, fontWeight: FontWeight.w700)),
+                ))
           ],
         ));
   }
