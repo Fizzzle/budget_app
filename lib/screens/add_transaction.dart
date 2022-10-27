@@ -1,6 +1,7 @@
 import 'package:budget_app/controllers/db_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:budget_app/ThemeStatic.dart' as Static;
 
 class AddTransaction extends StatefulWidget {
   const AddTransaction({super.key});
@@ -32,7 +33,7 @@ class _AddTransactionState extends State<AddTransaction> {
           onPressed: () {
             Navigator.pop(context);
           },
-          backgroundColor: Colors.black,
+          backgroundColor: Static.PrimaryMaterialColor,
           child: Icon(
             Icons.close,
             size: 32.0,

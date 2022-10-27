@@ -1,6 +1,7 @@
 import 'package:budget_app/controllers/db_helper.dart';
 import 'package:budget_app/screens/add_transaction.dart';
 import 'package:flutter/material.dart';
+import 'package:budget_app/ThemeStatic.dart' as Static;
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -52,7 +53,7 @@ class _HomePageState extends State<HomePage> {
             setState(() {});
           });
         },
-        backgroundColor: Colors.black,
+        backgroundColor: Static.PrimaryMaterialColor,
         child: Icon(
           Icons.add,
           size: 32.0,
@@ -76,30 +77,6 @@ class _HomePageState extends State<HomePage> {
             getTotalBalance(snapshot.data!);
             return ListView(
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Container(
-                            child: Icon(
-                              Icons.settings,
-                              size: 32,
-                            ),
-                          )
-                        ],
-                      ),
-                      Text('Добро Пожаловать'),
-                      // Кнопка Сеттинга
-                      Icon(
-                        Icons.settings,
-                        size: 32,
-                      ),
-                    ],
-                  ),
-                ),
                 // Дальшее
                 Container(
                   width: size.width * 0.9,
@@ -172,11 +149,15 @@ class _HomePageState extends State<HomePage> {
                     itemCount: snapshot.data!.length,
                     itemBuilder: (context, index) {
                       Map dataAtIndex = snapshot.data![index];
-                      // if (dataAtIndex['type'] == "Доход") {
-                      return expenseTile(120, 'note');
-                      // } else {
-                      //   Text('hey');
-                      // }
+                      if (dataAtIndex['type'] == "Доход") {
+                        return IncomeTile(
+                            dataAtIndex['amount'], dataAtIndex['note']);
+                      } else {
+                        return expenseTile(
+                            dataAtIndex['amount'], dataAtIndex['note']);
+                        //   Text('hey');
+                        // }
+                      }
                     })
               ],
             );
@@ -200,7 +181,7 @@ class _HomePageState extends State<HomePage> {
             ),
             padding: EdgeInsets.all(6.0),
             child: Icon(
-              Icons.arrow_downward,
+              Icons.arrow_upward,
               size: 28,
               color: Colors.greenAccent,
             ),
@@ -237,7 +218,7 @@ class _HomePageState extends State<HomePage> {
             ),
             padding: EdgeInsets.all(6.0),
             child: Icon(
-              Icons.arrow_upward,
+              Icons.arrow_downward,
               size: 28,
               color: Colors.redAccent,
             ),
@@ -264,27 +245,80 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // !виджет последних действий
+  // !виджет последних действий расход
   //
   Widget expenseTile(int value, String note) {
     return Container(
       margin: EdgeInsets.all(8.0),
       padding: EdgeInsets.all(8.0),
       decoration: BoxDecoration(
-        color: Color(0xffced4eb),
+        color: Color.fromARGB(255, 233, 195, 195),
         borderRadius: BorderRadius.circular(8.0),
       ),
-      child: Column(children: [
-        Row(
-          children: [
-            Icon(
-              Icons.arrow_circle_up_outlined,
-              size: 33,
-              color: Colors.green[900],
-            )
-          ],
-        ),
-      ]),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Icon(
+                Icons.arrow_circle_down_outlined,
+                size: 33,
+                color: Colors.red[900],
+              ),
+              SizedBox(
+                width: 4,
+              ),
+              Text(
+                'Расход',
+                style: TextStyle(fontSize: 20),
+              ),
+            ],
+          ),
+          Text(
+            "- $value грн",
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
+          )
+        ],
+      ),
+    );
+  }
+
+  // !Виджет последних действий доход
+  Widget IncomeTile(int value, String note) {
+    return Container(
+      margin: EdgeInsets.all(8.0),
+      padding: EdgeInsets.all(8.0),
+      decoration: BoxDecoration(
+        color: Color.fromARGB(255, 196, 233, 195),
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Icon(
+                Icons.arrow_circle_up_outlined,
+                size: 33,
+                color: Colors.green[900],
+              ),
+              SizedBox(
+                width: 4,
+              ),
+              Text(
+                'Доход',
+                style: TextStyle(fontSize: 20),
+              ),
+            ],
+          ),
+          Text(
+            "+ $value грн",
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
+          )
+        ],
+      ),
     );
   }
 }
