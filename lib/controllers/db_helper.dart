@@ -10,6 +10,14 @@ class DbHelper {
     box = Hive.box('money');
   }
 
+  Future deleteData(int index) async {
+    await box.delete(index);
+  }
+
+  Future deleteAll(dynamic box) async {
+    await box.deleteAll(box);
+  }
+
   Future addData(int amount, DateTime date, String note, String type) async {
     var value = {'amount': amount, 'date': date, 'note': note, 'type': type};
     box.add(value);

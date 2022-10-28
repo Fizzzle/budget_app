@@ -1,4 +1,4 @@
-import 'package:budget_app/screens/homepage.dart';
+import 'package:budget_app/homepage.dart';
 import 'package:budget_app/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
