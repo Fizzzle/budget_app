@@ -56,6 +56,7 @@ class _AddTransactionState extends State<AddTransaction> {
           TextField(
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             keyboardType: TextInputType.number,
+            maxLength: 10,
             decoration: InputDecoration(
               icon: Icon(
                 Icons.account_balance_wallet,

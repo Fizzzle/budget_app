@@ -67,7 +67,7 @@ MaterialColor PrimaryMaterialColor = const MaterialColor(
 );
 
 ThemeData myTheme = ThemeData(
-  fontFamily: "balsamiqFont",
+  fontFamily: "Inter",
   primaryColor: const Color(0xffea7500),
   primarySwatch: PrimaryMaterialColor,
 );

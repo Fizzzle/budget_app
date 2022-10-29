@@ -1,10 +1,13 @@
 import 'package:budget_app/controllers/db_helper.dart';
+import 'package:budget_app/modals/transaction_modal.dart';
 import 'package:budget_app/screens/add_transaction.dart';
 import 'package:budget_app/screens/historyPage.dart';
 import 'package:d_chart/d_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:budget_app/ThemeStatic.dart' as Static;
+import 'package:hive/hive.dart';
 import 'package:unicons/unicons.dart';
+import '../controllers/db_helper.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -15,21 +18,41 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   DbHelper dbHelper = DbHelper();
+  late Box box;
   int totalBalance = 0;
   int totalIncome = 0;
   int totalExpense = 0;
-
-  var spandingList = [
-    {'domain': 'Всякое', 'measure': 28},
-    {'domain': 'Траты', 'measure': 27},
-    {'domain': 'Машина', 'measure': 20},
-    {'domain': 'Такси', 'measure': 5},
-  ];
+  var dataSet;
+  //  = [
+  // {'domain': "Всякое", 'measure': 28},
+  // {'domain': 'Еда', 'measure': 27},
+  // {'domain': 'Машина', 'measure': 20},
+  // {'domain': 'Такси', 'measure': 5},
+  // ];
 
   var iconList = [
     Icons.person,
     Icons.settings,
   ];
+
+  List<String, int>(Map entireData) {
+    print(entireData);
+    dataSet = [];
+    entireData.forEach((key, value) {
+      print('a');
+      if (value['type'] == "Расход") {
+        print(value['note']);
+        dataSet.add(
+          {
+            'domain': value['note'] as String,
+            'measure': value['amount'] as int
+          },
+        );
+      }
+    });
+
+    return dataSet!;
+  }
 
   getTotalBalance(Map entireData) {
     totalBalance = 0;
@@ -66,7 +89,8 @@ class _MainPageState extends State<MainPage> {
           if (snapshot.hasData) {
             if (snapshot.data!.isEmpty) {
               return Center(
-                child: Text('Данные пустые'),
+                child:
+                    Text('Нажмите на + снизу и добавьте первые доходы и траты'),
               );
             }
             //
@@ -95,7 +119,13 @@ class _MainPageState extends State<MainPage> {
                           ),
                           boxShadow: [
                             BoxShadow(
-                                color: Colors.grey.shade500,
+                                color: totalBalance >= 100
+                                    ? Colors.red.shade100
+                                    : totalBalance == 0
+                                        ? Colors.grey.shade500
+                                        : totalBalance <= 100
+                                            ? Colors.grey.shade500
+                                            : Colors.green.shade100,
                                 offset: const Offset(4.0, 4.0),
                                 blurRadius: 9.0,
                                 spreadRadius: 7)
@@ -112,19 +142,22 @@ class _MainPageState extends State<MainPage> {
                           SizedBox(
                             height: size.height * 0.02,
                           ),
-                          Text(
-                            '${totalBalance} грн',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontSize: 30,
-                                fontWeight: FontWeight.w700,
-                                color: totalBalance <= 0
-                                    ? Color.fromARGB(255, 229, 188, 187)
-                                    : totalBalance >= 2500
-                                        ? totalBalance >= 25000
-                                            ? Color.fromARGB(255, 52, 197, 57)
-                                            : Color.fromARGB(255, 107, 207, 111)
-                                        : Color.fromARGB(255, 194, 219, 194)),
+                          FittedBox(
+                            child: Text(
+                              '${totalBalance} грн',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.w700,
+                                  color: totalBalance <= -1
+                                      ? Color.fromARGB(255, 229, 188, 187)
+                                      : totalBalance >= 2500
+                                          ? totalBalance >= 25000
+                                              ? Color.fromARGB(255, 52, 197, 57)
+                                              : Color.fromARGB(
+                                                  255, 107, 207, 111)
+                                          : Color.fromARGB(255, 194, 219, 194)),
+                            ),
                           ),
                           SizedBox(
                             height: size.height * 0.02,
@@ -144,19 +177,31 @@ class _MainPageState extends State<MainPage> {
                     ),
                   ),
                 ),
+
                 //
                 //
                 //
                 Container(
                   height: size.height * 0.3,
-                  child: DChartPie(
-                    data: [
-                      {'domain': 'Всякое', 'measure': 28},
+                  child:
+                      //
+                      DChartPie(
+                    data: dataSet ??= [
+                      {'domain': "Всякое", 'measure': totalExpense.toInt()},
                       {'domain': 'Еда', 'measure': 27},
                       {'domain': 'Машина', 'measure': 20},
                       {'domain': 'Такси', 'measure': 5},
                     ],
+                    //
+                    // [
+                    // {'domain': "Всякое", 'measure': 28},
+                    // {'domain': 'Еда', 'measure': 27},
+                    // {'domain': 'Машина', 'measure': 20},
+                    // {'domain': 'Такси', 'measure': 5},
+                    // ],
+
                     fillColor: (pieData, index) {
+                      // return Colors.red;
                       switch (pieData['domain']) {
                         case 'Всякое':
                           return Colors.grey;
@@ -172,10 +217,10 @@ class _MainPageState extends State<MainPage> {
                     labelColor: Colors.black,
                     labelFontSize: 14,
                     labelLineColor: Colors.black,
-                    labelLineThickness: 3,
-                    labelLinelength: 26,
+                    labelLineThickness: 2,
+                    labelLinelength: 10,
                     labelPadding: 2,
-                    strokeWidth: 5,
+                    strokeWidth: 2,
                     animate: true,
                     pieLabel: (Map<dynamic, dynamic> pieData, int? index) {
                       return pieData['domain'] +
@@ -183,7 +228,9 @@ class _MainPageState extends State<MainPage> {
                           pieData['measure'].toString();
                     },
                   ),
+                  //
                 ),
+
                 //
                 //
                 Column(
@@ -192,12 +239,14 @@ class _MainPageState extends State<MainPage> {
                       'Популярные категории',
                       style: TextStyle(
                           fontSize: size.height * 0.04,
+                          color: Colors.grey,
                           fontWeight: FontWeight.w700),
                     ),
                     SizedBox(
                       height: size.height * 0.03,
                     ),
                     Container(
+                      margin: EdgeInsets.only(left: 12),
                       height: size.height * 0.15,
                       child: ListView(
                         scrollDirection: Axis.horizontal,
@@ -208,9 +257,11 @@ class _MainPageState extends State<MainPage> {
                               children: [
                                 Icon(
                                   Icons.car_crash,
+                                  color: Static.PrimaryMaterialColor,
                                   size: 53,
                                 ),
-                                Text('Машина'),
+                                Text('Машина',
+                                    style: TextStyle(color: Colors.grey)),
                               ],
                             ),
                           ),
@@ -220,9 +271,11 @@ class _MainPageState extends State<MainPage> {
                               children: [
                                 Icon(
                                   UniconsLine.shopping_cart_alt,
+                                  color: Colors.purple[900],
                                   size: 53,
                                 ),
-                                Text('Шопинг'),
+                                Text('Шопинг',
+                                    style: TextStyle(color: Colors.grey)),
                               ],
                             ),
                           ),
@@ -232,9 +285,11 @@ class _MainPageState extends State<MainPage> {
                               children: [
                                 Icon(
                                   UniconsLine.bus,
+                                  color: Colors.amber[900],
                                   size: 53,
                                 ),
-                                Text('Транспорт'),
+                                Text('Транспорт',
+                                    style: TextStyle(color: Colors.grey)),
                               ],
                             ),
                           ),
@@ -243,10 +298,12 @@ class _MainPageState extends State<MainPage> {
                             child: Column(
                               children: [
                                 Icon(
-                                  Icons.car_crash,
+                                  Icons.attractions,
+                                  color: Colors.green[700],
                                   size: 53,
                                 ),
-                                Text('Машина'),
+                                Text('Развлечения',
+                                    style: TextStyle(color: Colors.grey)),
                               ],
                             ),
                           ),
@@ -255,10 +312,12 @@ class _MainPageState extends State<MainPage> {
                             child: Column(
                               children: [
                                 Icon(
-                                  UniconsLine.shopping_cart_alt,
+                                  UniconsLine.mobile_android,
+                                  color: Colors.red[500],
                                   size: 53,
                                 ),
-                                Text('Шопинг'),
+                                Text('Связь',
+                                    style: TextStyle(color: Colors.grey)),
                               ],
                             ),
                           ),
@@ -267,10 +326,40 @@ class _MainPageState extends State<MainPage> {
                             child: Column(
                               children: [
                                 Icon(
-                                  UniconsLine.bus,
+                                  UniconsLine.home_alt,
+                                  color: Colors.green[500],
                                   size: 53,
                                 ),
-                                Text('Транспорт'),
+                                Text('Дом',
+                                    style: TextStyle(color: Colors.grey)),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            width: size.width * 0.2,
+                            child: Column(
+                              children: [
+                                Icon(
+                                  UniconsLine.emoji,
+                                  color: Colors.red[700],
+                                  size: 53,
+                                ),
+                                Text('Отдых',
+                                    style: TextStyle(color: Colors.grey)),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            width: size.width * 0.2,
+                            child: Column(
+                              children: [
+                                Icon(
+                                  UniconsLine.game_structure,
+                                  color: Colors.purple[900],
+                                  size: 53,
+                                ),
+                                Text('Игры',
+                                    style: TextStyle(color: Colors.grey)),
                               ],
                             ),
                           ),
@@ -316,12 +405,14 @@ class _MainPageState extends State<MainPage> {
               'Доходы',
               style: TextStyle(fontSize: 14.0, color: Colors.white70),
             ),
-            Text(
-              value,
-              style: TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.white70),
+            FittedBox(
+              child: Text(
+                value,
+                style: TextStyle(
+                    // fontSize: 20.0,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.white70),
+              ),
             ),
           ],
         ),
@@ -354,12 +445,14 @@ class _MainPageState extends State<MainPage> {
               'Расход',
               style: TextStyle(fontSize: 14.0, color: Colors.white70),
             ),
-            Text(
-              value,
-              style: TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.white70),
+            FittedBox(
+              child: Text(
+                value,
+                style: TextStyle(
+                    // fontSize: 20.0,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.white70),
+              ),
             ),
           ],
         ),
