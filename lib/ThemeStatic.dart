@@ -1,66 +1,69 @@
 import 'package:flutter/material.dart';
 
-MaterialColor PrimaryMaterialColor = const MaterialColor(
-  4293555456,
+final buttonColor = Color.fromARGB(255, 0, 149, 255);
+final backgroundColor = Color(0xffe2e7ef);
+
+MaterialColor PrimaryMaterialColor = MaterialColor(
+  4278717375,
   <int, Color>{
     50: Color.fromRGBO(
-      234,
-      117,
-      0,
+      8,
+      11,
+      191,
       .1,
     ),
     100: Color.fromRGBO(
-      234,
-      117,
-      0,
+      8,
+      11,
+      191,
       .2,
     ),
     200: Color.fromRGBO(
-      234,
-      117,
-      0,
+      8,
+      11,
+      191,
       .3,
     ),
     300: Color.fromRGBO(
-      234,
-      117,
-      0,
+      8,
+      11,
+      191,
       .4,
     ),
     400: Color.fromRGBO(
-      234,
-      117,
-      0,
+      8,
+      11,
+      191,
       .5,
     ),
     500: Color.fromRGBO(
-      234,
-      117,
-      0,
+      8,
+      11,
+      191,
       .6,
     ),
     600: Color.fromRGBO(
-      234,
-      117,
-      0,
+      8,
+      11,
+      191,
       .7,
     ),
     700: Color.fromRGBO(
-      234,
-      117,
-      0,
+      8,
+      11,
+      191,
       .8,
     ),
     800: Color.fromRGBO(
-      234,
-      117,
-      0,
+      8,
+      11,
+      191,
       .9,
     ),
     900: Color.fromRGBO(
-      234,
-      117,
-      0,
+      8,
+      11,
+      191,
       1,
     ),
   },
@@ -68,6 +71,6 @@ MaterialColor PrimaryMaterialColor = const MaterialColor(
 
 ThemeData myTheme = ThemeData(
   fontFamily: "Inter",
-  primaryColor: const Color(0xffea7500),
+  primaryColor: Color(0xff080bbf),
   primarySwatch: PrimaryMaterialColor,
 );

@@ -95,16 +95,17 @@ class _HistryPageState extends State<HistryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Static.PrimaryMaterialColor,
         elevation: 0,
         leading: BackButton(),
       ),
-      backgroundColor: Color(0xffe2e7ef),
+      backgroundColor: Static.backgroundColor,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context).pop();
         },
-        backgroundColor: Static.PrimaryMaterialColor,
+        backgroundColor: Static.buttonColor,
         child: Icon(
           Icons.close,
           size: 32.0,
@@ -202,7 +203,7 @@ class _HistryPageState extends State<HistryPage> {
         margin: EdgeInsets.all(8.0),
         padding: EdgeInsets.all(8.0),
         decoration: BoxDecoration(
-          color: Color.fromARGB(255, 233, 195, 195),
+          color: Colors.grey.shade50,
           borderRadius: BorderRadius.circular(8.0),
         ),
         child: Row(
@@ -278,7 +279,7 @@ class _HistryPageState extends State<HistryPage> {
         margin: EdgeInsets.all(8.0),
         padding: EdgeInsets.all(8.0),
         decoration: BoxDecoration(
-          color: Color.fromARGB(255, 196, 233, 195),
+          color: Colors.grey.shade50,
           borderRadius: BorderRadius.circular(8.0),
         ),
         child: Row(

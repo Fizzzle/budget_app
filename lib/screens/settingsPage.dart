@@ -1,5 +1,6 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:budget_app/ThemeStatic.dart' as Static;
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -71,8 +72,11 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
             ElevatedButton(
                 onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  primary: Static.buttonColor, // background
+                ),
                 child: Text('СБРОСИТЬ ДОХОДЫ И РАСХОДЫ',
-                    style: TextStyle(fontSize: 18)))
+                    style: TextStyle(fontSize: 18))),
           ],
         ),
       ),

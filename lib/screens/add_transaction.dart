@@ -30,7 +30,7 @@ class _AddTransactionState extends State<AddTransaction> {
         toolbarHeight: 0.0,
         // elevation: 0,
       ),
-      backgroundColor: Color(0xffe2e7ef),
+      backgroundColor: Static.backgroundColor,
       // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       // floatingActionButton: FloatingActionButton(
       //   onPressed: () {
@@ -108,6 +108,7 @@ class _AddTransactionState extends State<AddTransaction> {
                         color: type == "Доход" ? Colors.white : Colors.black),
                   ),
                   selectedColor: Color.fromARGB(255, 76, 176, 81),
+                  shadowColor: Colors.grey,
                   selected: type == "Доход" ? true : false,
                   onSelected: (val) {
                     if (val) {
@@ -166,10 +167,15 @@ class _AddTransactionState extends State<AddTransaction> {
                 print("Not all Value Proveded");
               }
             },
+            style: ElevatedButton.styleFrom(
+              primary: Static.buttonColor, // background
+            ),
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 12.0),
-              child: Text("Внести",
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700)),
+              child: Text(
+                "Внести",
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
+              ),
             ),
           ),
         ],

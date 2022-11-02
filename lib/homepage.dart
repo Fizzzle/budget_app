@@ -62,9 +62,10 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 0.0,
+        backgroundColor: Static.buttonColor,
         // elevation: 0,
       ),
-      backgroundColor: Color(0xffe2e7ef),
+      backgroundColor: Static.backgroundColor,
       //
       floatingActionButtonLocation: track
           ? FloatingActionButtonLocation.centerDocked
@@ -91,7 +92,7 @@ class _HomePageState extends State<HomePage> {
           //   setState(() {});
           // });
         },
-        backgroundColor: Static.PrimaryMaterialColor,
+        backgroundColor: Static.buttonColor,
         child: Icon(
           track ? Icons.add : Icons.close,
           size: 32.0,
@@ -105,7 +106,7 @@ class _HomePageState extends State<HomePage> {
           activeIndex: _selectedIndex,
           backgroundColor: Colors.white,
           inactiveColor: Colors.black,
-          activeColor: Static.PrimaryMaterialColor,
+          activeColor: Static.buttonColor,
           gapLocation: GapLocation.center,
           notchSmoothness: NotchSmoothness.verySmoothEdge,
           leftCornerRadius: 32,

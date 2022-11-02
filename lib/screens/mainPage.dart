@@ -23,12 +23,6 @@ class _MainPageState extends State<MainPage> {
   int totalIncome = 0;
   int totalExpense = 0;
   var dataSet;
-  //  = [
-  // {'domain': "Всякое", 'measure': 28},
-  // {'domain': 'Еда', 'measure': 27},
-  // {'domain': 'Машина', 'measure': 20},
-  // {'domain': 'Такси', 'measure': 5},
-  // ];
 
   var iconList = [
     Icons.person,
@@ -77,7 +71,7 @@ class _MainPageState extends State<MainPage> {
         toolbarHeight: 0.0,
         // elevation: 0,
       ),
-      backgroundColor: Color(0xffe2e7ef),
+      backgroundColor: Static.backgroundColor,
       body: FutureBuilder<Map>(
         future: dbHelper.fetch(),
         builder: (context, snapshot) {
@@ -96,6 +90,7 @@ class _MainPageState extends State<MainPage> {
             //
             getTotalBalance(snapshot.data!);
             return ListView(
+              physics: NeverScrollableScrollPhysics(),
               children: [
                 // Дальшее
                 GestureDetector(
@@ -111,10 +106,10 @@ class _MainPageState extends State<MainPage> {
                           borderRadius: BorderRadius.circular(12),
                           gradient: LinearGradient(
                             colors: [
-                              Color.fromARGB(255, 143, 68, 255),
-                              Color.fromARGB(255, 99, 68, 255),
-                              Color.fromARGB(255, 68, 84, 255),
-                              Color.fromARGB(255, 68, 127, 255),
+                              Color.fromARGB(255, 0, 9, 107),
+                              // Color.fromARGB(255, 13, 28, 196),
+                              // Color.fromARGB(255, 102, 149, 237),
+                              Color.fromARGB(255, 0, 128, 255),
                             ],
                           ),
                           boxShadow: [
@@ -181,192 +176,406 @@ class _MainPageState extends State<MainPage> {
                 //
                 //
                 //
-                Container(
-                  height: size.height * 0.3,
-                  child:
-                      //
-                      DChartPie(
-                    data: dataSet ??= [
-                      {'domain': "Всякое", 'measure': totalExpense.toInt()},
-                      {'domain': 'Еда', 'measure': 27},
-                      {'domain': 'Машина', 'measure': 20},
-                      {'domain': 'Такси', 'measure': 5},
-                    ],
-                    //
-                    // [
-                    // {'domain': "Всякое", 'measure': 28},
-                    // {'domain': 'Еда', 'measure': 27},
-                    // {'domain': 'Машина', 'measure': 20},
-                    // {'domain': 'Такси', 'measure': 5},
-                    // ],
-
-                    fillColor: (pieData, index) {
-                      // return Colors.red;
-                      switch (pieData['domain']) {
-                        case 'Всякое':
-                          return Colors.grey;
-                        case 'Еда':
-                          return Colors.green;
-                        case 'Машина':
-                          return Colors.blue;
-                        case 'Такси':
-                          return Colors.red;
-                      }
-                    },
-                    // labelPosition: PieLabelPosition.outside,
-                    labelColor: Colors.black,
-                    labelFontSize: 14,
-                    labelLineColor: Colors.black,
-                    labelLineThickness: 2,
-                    labelLinelength: 10,
-                    labelPadding: 2,
-                    strokeWidth: 2,
-                    animate: true,
-                    pieLabel: (Map<dynamic, dynamic> pieData, int? index) {
-                      return pieData['domain'] +
-                          ':\n' +
-                          pieData['measure'].toString();
-                    },
-                  ),
-                  //
-                ),
-
                 //
                 //
-                Column(
-                  children: [
-                    Text(
-                      'Популярные категории',
-                      style: TextStyle(
-                          fontSize: size.height * 0.04,
-                          color: Colors.grey,
-                          fontWeight: FontWeight.w700),
-                    ),
-                    SizedBox(
-                      height: size.height * 0.03,
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(left: 12),
-                      height: size.height * 0.15,
-                      child: ListView(
-                        scrollDirection: Axis.horizontal,
-                        children: [
-                          Container(
-                            width: size.width * 0.2,
-                            child: Column(
-                              children: [
-                                Icon(
-                                  Icons.car_crash,
-                                  color: Static.PrimaryMaterialColor,
-                                  size: 53,
-                                ),
-                                Text('Машина',
-                                    style: TextStyle(color: Colors.grey)),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            width: size.width * 0.2,
-                            child: Column(
-                              children: [
-                                Icon(
-                                  UniconsLine.shopping_cart_alt,
-                                  color: Colors.purple[900],
-                                  size: 53,
-                                ),
-                                Text('Шопинг',
-                                    style: TextStyle(color: Colors.grey)),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            width: size.width * 0.2,
-                            child: Column(
-                              children: [
-                                Icon(
-                                  UniconsLine.bus,
-                                  color: Colors.amber[900],
-                                  size: 53,
-                                ),
-                                Text('Транспорт',
-                                    style: TextStyle(color: Colors.grey)),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            width: size.width * 0.2,
-                            child: Column(
-                              children: [
-                                Icon(
-                                  Icons.attractions,
-                                  color: Colors.green[700],
-                                  size: 53,
-                                ),
-                                Text('Развлечения',
-                                    style: TextStyle(color: Colors.grey)),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            width: size.width * 0.2,
-                            child: Column(
-                              children: [
-                                Icon(
-                                  UniconsLine.mobile_android,
-                                  color: Colors.red[500],
-                                  size: 53,
-                                ),
-                                Text('Связь',
-                                    style: TextStyle(color: Colors.grey)),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            width: size.width * 0.2,
-                            child: Column(
-                              children: [
-                                Icon(
-                                  UniconsLine.home_alt,
-                                  color: Colors.green[500],
-                                  size: 53,
-                                ),
-                                Text('Дом',
-                                    style: TextStyle(color: Colors.grey)),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            width: size.width * 0.2,
-                            child: Column(
-                              children: [
-                                Icon(
-                                  UniconsLine.emoji,
-                                  color: Colors.red[700],
-                                  size: 53,
-                                ),
-                                Text('Отдых',
-                                    style: TextStyle(color: Colors.grey)),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            width: size.width * 0.2,
-                            child: Column(
-                              children: [
-                                Icon(
-                                  UniconsLine.game_structure,
-                                  color: Colors.purple[900],
-                                  size: 53,
-                                ),
-                                Text('Игры',
-                                    style: TextStyle(color: Colors.grey)),
-                              ],
-                            ),
-                          ),
-                        ],
+                Padding(
+                  padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+                  child: Column(
+                    children: [
+                      Text(
+                        'Избранные категории',
+                        style: TextStyle(
+                            fontSize: size.height * 0.03,
+                            color: Colors.grey,
+                            fontWeight: FontWeight.w700),
                       ),
-                    )
-                  ],
+                      SizedBox(
+                        height: size.height * 0.03,
+                      ),
+                      Container(
+                        // margin: EdgeInsets.only(left: 20, top: 20),
+                        height: size.height * 0.55,
+                        child: GridView.count(
+                          primary: true,
+                          childAspectRatio: 3 / 3,
+                          crossAxisSpacing: 20,
+                          mainAxisSpacing: 20,
+                          crossAxisCount: 3,
+                          children: [
+                            InkWell(
+                              onLongPress: () {
+                                print('hey');
+                              },
+                              onTap: () {
+                                print('fuuu');
+                              },
+                              child: Container(
+                                padding: EdgeInsets.only(top: 15, bottom: 15),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(30),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color:
+                                              Color.fromARGB(31, 119, 119, 119),
+                                          offset: const Offset(0.0, 4.0),
+                                          blurRadius: 20.0,
+                                          spreadRadius: 2)
+                                    ]),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Image.asset(
+                                      'assets/icons/cat.png',
+                                      height: size.height * 0.07,
+                                    ),
+                                    SizedBox(
+                                      height: size.height * 0.01,
+                                    ),
+                                    Text(
+                                      'Животные',
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            InkWell(
+                              onLongPress: () {
+                                print('hey');
+                              },
+                              onTap: () {
+                                print('fuuu');
+                              },
+                              child: Container(
+                                padding: EdgeInsets.only(top: 15, bottom: 15),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(30),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color:
+                                              Color.fromARGB(31, 119, 119, 119),
+                                          offset: const Offset(0.0, 4.0),
+                                          blurRadius: 20.0,
+                                          spreadRadius: 2)
+                                    ]),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Image.asset(
+                                      'assets/icons/car.png',
+                                      height: size.height * 0.07,
+                                    ),
+                                    SizedBox(
+                                      height: size.height * 0.01,
+                                    ),
+                                    Text(
+                                      'Машина',
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            InkWell(
+                              onLongPress: () {
+                                print('hey');
+                              },
+                              onTap: () {
+                                print('fuuu');
+                              },
+                              child: Container(
+                                padding: EdgeInsets.only(top: 15, bottom: 15),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(30),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color:
+                                              Color.fromARGB(31, 119, 119, 119),
+                                          offset: const Offset(0.0, 4.0),
+                                          blurRadius: 20.0,
+                                          spreadRadius: 2)
+                                    ]),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Image.asset(
+                                      'assets/icons/relax.png',
+                                      height: size.height * 0.07,
+                                    ),
+                                    SizedBox(
+                                      height: size.height * 0.01,
+                                    ),
+                                    Text(
+                                      'Отдых',
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            InkWell(
+                              onLongPress: () {
+                                print('hey');
+                              },
+                              onTap: () {
+                                print('fuuu');
+                              },
+                              child: Container(
+                                padding: EdgeInsets.only(top: 15, bottom: 15),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(30),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color:
+                                              Color.fromARGB(31, 119, 119, 119),
+                                          offset: const Offset(0.0, 4.0),
+                                          blurRadius: 20.0,
+                                          spreadRadius: 2)
+                                    ]),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Image.asset(
+                                      'assets/icons/joystick.png',
+                                      height: size.height * 0.07,
+                                    ),
+                                    SizedBox(
+                                      height: size.height * 0.01,
+                                    ),
+                                    Text(
+                                      'Хобби',
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            InkWell(
+                              onLongPress: () {
+                                print('hey');
+                              },
+                              onTap: () {
+                                print('fuuu');
+                              },
+                              child: Container(
+                                padding: EdgeInsets.only(top: 15, bottom: 15),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(30),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color:
+                                              Color.fromARGB(31, 119, 119, 119),
+                                          offset: const Offset(0.0, 4.0),
+                                          blurRadius: 20.0,
+                                          spreadRadius: 2)
+                                    ]),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Image.asset(
+                                      'assets/icons/study.png',
+                                      height: size.height * 0.07,
+                                    ),
+                                    SizedBox(
+                                      height: size.height * 0.01,
+                                    ),
+                                    Text(
+                                      'Учеба',
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            InkWell(
+                              onLongPress: () {
+                                print('hey');
+                              },
+                              onTap: () {
+                                print('fuuu');
+                              },
+                              child: Container(
+                                padding: EdgeInsets.only(top: 15, bottom: 15),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(30),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color:
+                                              Color.fromARGB(31, 119, 119, 119),
+                                          offset: const Offset(0.0, 4.0),
+                                          blurRadius: 20.0,
+                                          spreadRadius: 2)
+                                    ]),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Image.asset(
+                                      'assets/icons/taxi.png',
+                                      height: size.height * 0.07,
+                                    ),
+                                    SizedBox(
+                                      height: size.height * 0.01,
+                                    ),
+                                    Text(
+                                      'Такси',
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            InkWell(
+                              onLongPress: () {
+                                print('hey');
+                              },
+                              onTap: () {
+                                print('fuuu');
+                              },
+                              child: Container(
+                                padding: EdgeInsets.only(top: 15, bottom: 15),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(30),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color:
+                                              Color.fromARGB(31, 119, 119, 119),
+                                          offset: const Offset(0.0, 4.0),
+                                          blurRadius: 20.0,
+                                          spreadRadius: 2)
+                                    ]),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Image.asset(
+                                      'assets/icons/cat.png',
+                                      height: size.height * 0.07,
+                                    ),
+                                    SizedBox(
+                                      height: size.height * 0.01,
+                                    ),
+                                    Text(
+                                      'Животные',
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            InkWell(
+                              onLongPress: () {
+                                print('hey');
+                              },
+                              onTap: () {
+                                print('fuuu');
+                              },
+                              child: Container(
+                                padding: EdgeInsets.only(top: 15, bottom: 15),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(30),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color:
+                                              Color.fromARGB(31, 119, 119, 119),
+                                          offset: const Offset(0.0, 4.0),
+                                          blurRadius: 20.0,
+                                          spreadRadius: 2)
+                                    ]),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Image.asset(
+                                      'assets/icons/cat.png',
+                                      height: size.height * 0.07,
+                                    ),
+                                    SizedBox(
+                                      height: size.height * 0.01,
+                                    ),
+                                    Text(
+                                      'Животные',
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            InkWell(
+                              onLongPress: () {
+                                print('hey');
+                              },
+                              onTap: () {
+                                print('fuuu');
+                              },
+                              child: Container(
+                                padding: EdgeInsets.only(top: 15, bottom: 15),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(30),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color:
+                                              Color.fromARGB(31, 119, 119, 119),
+                                          offset: const Offset(0.0, 4.0),
+                                          blurRadius: 20.0,
+                                          spreadRadius: 2)
+                                    ]),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Image.asset(
+                                      'assets/icons/cat.png',
+                                      height: size.height * 0.07,
+                                    ),
+                                    SizedBox(
+                                      height: size.height * 0.01,
+                                    ),
+                                    Text(
+                                      'Животные',
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ],
             );
@@ -439,7 +648,7 @@ class _MainPageState extends State<MainPage> {
               right: 8,
             )),
         Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               'Расход',
