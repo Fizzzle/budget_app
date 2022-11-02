@@ -27,8 +27,10 @@ class _AddTransactionState extends State<AddTransaction> {
 
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 0.0,
-        // elevation: 0,
+        // toolbarHeight: 0.0,
+        elevation: 0,
+        leading: BackButton(),
+        backgroundColor: Static.buttonColor,
       ),
       backgroundColor: Static.backgroundColor,
       // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

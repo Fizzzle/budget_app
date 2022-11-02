@@ -2,6 +2,7 @@ import 'package:budget_app/controllers/db_helper.dart';
 import 'package:budget_app/modals/transaction_modal.dart';
 import 'package:budget_app/screens/add_transaction.dart';
 import 'package:budget_app/screens/historyPage.dart';
+import 'package:budget_app/screens/widgets/confirmDialog.dart';
 import 'package:d_chart/d_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:budget_app/ThemeStatic.dart' as Static;
@@ -23,6 +24,7 @@ class _MainPageState extends State<MainPage> {
   int totalIncome = 0;
   int totalExpense = 0;
   var dataSet;
+  var index;
 
   var iconList = [
     Icons.person,
@@ -66,6 +68,21 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    initState() {
+      String firstName = 'Животное';
+      String secondName = 'Машина';
+      String threeName = 'Отдых';
+      String fourName = 'Хобби';
+      String fiveName = 'Учеба';
+      String sixName = 'Такси';
+      String sevenName = 'Животное';
+      String eightName = 'Животное';
+      String nineName = 'Животное';
+      String tenName = 'Животное';
+      String elevenName = 'Животное';
+      String twelveName = 'Животное';
+    }
+
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 0.0,
@@ -194,7 +211,7 @@ class _MainPageState extends State<MainPage> {
                       ),
                       Container(
                         // margin: EdgeInsets.only(left: 20, top: 20),
-                        height: size.height * 0.55,
+                        height: size.height * 0.50,
                         child: GridView.count(
                           primary: true,
                           childAspectRatio: 3 / 3,
@@ -203,8 +220,17 @@ class _MainPageState extends State<MainPage> {
                           crossAxisCount: 3,
                           children: [
                             InkWell(
-                              onLongPress: () {
-                                print('hey');
+                              onLongPress: () async {
+                                var answer = await testConfirmDialog(
+                                    context,
+                                    1,
+                                    "ВНИМАНИЕ",
+                                    "Меняем Название ${firstName}?");
+                                if (answer != null) {
+                                  setState(() {
+                                    firstName = '${firstName}';
+                                  });
+                                }
                               },
                               onTap: () {
                                 print('fuuu');
@@ -234,7 +260,9 @@ class _MainPageState extends State<MainPage> {
                                       height: size.height * 0.01,
                                     ),
                                     Text(
-                                      'Животные',
+                                      (firstName == '')
+                                          ? 'Животное'
+                                          : firstName,
                                       style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w700),
@@ -244,8 +272,17 @@ class _MainPageState extends State<MainPage> {
                               ),
                             ),
                             InkWell(
-                              onLongPress: () {
-                                print('hey');
+                              onLongPress: () async {
+                                var answer = await testConfirmDialog(
+                                    context,
+                                    2,
+                                    "ВНИМАНИЕ",
+                                    "Меняем Название ${secondName}?");
+                                if (answer != null) {
+                                  setState(() {
+                                    secondName = '${secondName}';
+                                  });
+                                }
                               },
                               onTap: () {
                                 print('fuuu');
@@ -275,7 +312,9 @@ class _MainPageState extends State<MainPage> {
                                       height: size.height * 0.01,
                                     ),
                                     Text(
-                                      'Машина',
+                                      (secondName == '')
+                                          ? 'Машина'
+                                          : secondName,
                                       style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w700),
@@ -330,7 +369,8 @@ class _MainPageState extends State<MainPage> {
                                 print('hey');
                               },
                               onTap: () {
-                                print('fuuu');
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => AddTransaction()));
                               },
                               child: Container(
                                 padding: EdgeInsets.only(top: 15, bottom: 15),
@@ -440,6 +480,88 @@ class _MainPageState extends State<MainPage> {
                                     ),
                                     Text(
                                       'Такси',
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            InkWell(
+                              onLongPress: () {
+                                print('hey');
+                              },
+                              onTap: () {
+                                print('fuuu');
+                              },
+                              child: Container(
+                                padding: EdgeInsets.only(top: 15, bottom: 15),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(30),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color:
+                                              Color.fromARGB(31, 119, 119, 119),
+                                          offset: const Offset(0.0, 4.0),
+                                          blurRadius: 20.0,
+                                          spreadRadius: 2)
+                                    ]),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Image.asset(
+                                      'assets/icons/cat.png',
+                                      height: size.height * 0.07,
+                                    ),
+                                    SizedBox(
+                                      height: size.height * 0.01,
+                                    ),
+                                    Text(
+                                      'Животные',
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            InkWell(
+                              onLongPress: () {
+                                print('hey');
+                              },
+                              onTap: () {
+                                print('fuuu');
+                              },
+                              child: Container(
+                                padding: EdgeInsets.only(top: 15, bottom: 15),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(30),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color:
+                                              Color.fromARGB(31, 119, 119, 119),
+                                          offset: const Offset(0.0, 4.0),
+                                          blurRadius: 20.0,
+                                          spreadRadius: 2)
+                                    ]),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Image.asset(
+                                      'assets/icons/cat.png',
+                                      height: size.height * 0.07,
+                                    ),
+                                    SizedBox(
+                                      height: size.height * 0.01,
+                                    ),
+                                    Text(
+                                      'Животные',
                                       style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w700),

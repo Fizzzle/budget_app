@@ -41,6 +41,7 @@ dependencies:
   unicons: any
   animated_bottom_navigation_bar: ^1.1.0
   d_chart: ^0.1.0
+  flutter_switch: ^0.3.2
 
 
 dev_dependencies:

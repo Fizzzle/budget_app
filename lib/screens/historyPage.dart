@@ -1,5 +1,6 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:budget_app/modals/transaction_modal.dart';
+import 'package:budget_app/screens/widgets/confirmDialog.dart';
 import 'package:budget_app/screens/widgets/confirm_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:budget_app/ThemeStatic.dart' as Static;
@@ -200,60 +201,73 @@ class _HistryPageState extends State<HistryPage> {
         }
       },
       child: Container(
-        margin: EdgeInsets.all(8.0),
+        margin: EdgeInsets.only(left: 15, right: 15, top: 15),
         padding: EdgeInsets.all(8.0),
         decoration: BoxDecoration(
           color: Colors.grey.shade50,
           borderRadius: BorderRadius.circular(8.0),
+          boxShadow: [
+            BoxShadow(
+                color: Colors.grey.shade400,
+                offset: const Offset(4.0, 4.0),
+                blurRadius: 9.0,
+                spreadRadius: 2)
+          ],
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              // crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Column(
+                Row(
                   children: [
-                    Row(
+                    Icon(
+                      Icons.arrow_downward,
+                      size: 33,
+                      color: Colors.red[900],
+                    ),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.05,
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Icon(
-                          Icons.arrow_downward,
-                          size: 33,
-                          color: Colors.red[900],
-                        ),
                         SizedBox(
                           width: 4,
                         ),
                         Text(
-                          'Расход',
-                          style: TextStyle(fontSize: 20),
+                          "$note",
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.w700),
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.013,
+                        ),
+                        Text(
+                          '${data.day} ${months[data.month - 1]}',
+                          style: TextStyle(fontSize: 20, color: Colors.black54),
                         ),
                       ],
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.013,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 20.0),
-                      child: Text(
-                        '${data.day} ${months[data.month - 1]}',
-                        style: TextStyle(fontSize: 20, color: Colors.black54),
-                      ),
                     ),
                   ],
                 ),
               ],
             ),
             Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  "- $value грн",
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
+                  "- $value ",
+                  style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.red),
                 ),
-                Text(
-                  "$note",
-                  style: TextStyle(fontSize: 24, color: Colors.black54),
+                Padding(
+                  padding: const EdgeInsets.only(right: 5.0),
                 ),
               ],
             )
@@ -276,11 +290,18 @@ class _HistryPageState extends State<HistryPage> {
         }
       },
       child: Container(
-        margin: EdgeInsets.all(8.0),
+        margin: EdgeInsets.only(left: 15, right: 15, top: 15),
         padding: EdgeInsets.all(8.0),
         decoration: BoxDecoration(
           color: Colors.grey.shade50,
           borderRadius: BorderRadius.circular(8.0),
+          boxShadow: [
+            BoxShadow(
+                color: Colors.grey.shade400,
+                offset: const Offset(4.0, 4.0),
+                blurRadius: 9.0,
+                spreadRadius: 2)
+          ],
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -288,41 +309,47 @@ class _HistryPageState extends State<HistryPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
+                Row(
                   children: [
-                    Row(
+                    Icon(
+                      Icons.arrow_upward,
+                      size: 33,
+                      color: Colors.green[900],
+                    ),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.05,
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Icon(
-                          Icons.arrow_upward,
-                          size: 33,
-                          color: Colors.green[900],
-                        ),
                         SizedBox(
                           width: 4,
                         ),
                         Text(
                           'Доход',
-                          style: TextStyle(fontSize: 20),
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.w700),
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.013,
+                        ),
+                        Text(
+                          '${data.day} ${months[data.month - 1]}',
+                          style: TextStyle(fontSize: 20, color: Colors.black54),
                         ),
                       ],
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.013,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 20.0),
-                      child: Text(
-                        '${data.day} ${months[data.month - 1]}',
-                        style: TextStyle(fontSize: 20, color: Colors.black54),
-                      ),
                     ),
                   ],
                 ),
               ],
             ),
             Text(
-              "+ $value грн",
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
+              "+ $value ",
+              style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.green),
             )
           ],
         ),
