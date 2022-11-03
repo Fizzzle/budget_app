@@ -1,18 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-String firstName = '';
-String secondName = '';
-String threeName = '';
-String fourName = '';
-String fiveName = '';
-String sixName = '';
-String sevenName = '';
-String eightName = '';
-String nineName = '';
-String tenName = '';
-String elevenName = '';
-String twelveName = '';
+var firstName;
+var secondName;
+var threeName;
+var fourName;
+var fiveName;
+var sixName;
+var sevenName;
+var eightName;
+var nineName;
+var tenName;
+var elevenName;
+var twelveName;
 
 testConfirmDialog(
     BuildContext context, int index, String title, String content) async {
@@ -80,7 +80,6 @@ testConfirmDialog(
           onPressed: () {
             if (index == 1) {
               Navigator.of(context).pop(firstName);
-              print(index);
             } else if (index == 2) {
               Navigator.of(context).pop(secondName);
             } else if (index == 3) {
