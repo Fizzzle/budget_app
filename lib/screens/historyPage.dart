@@ -130,65 +130,61 @@ class _HistryPageState extends State<HistryPage> {
 
             return ListView(
               children: [
-                Expanded(
-                  child: Container(
-                    height: MediaQuery.of(context).size.height * 0.1,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(60),
-                          bottomRight: Radius.circular(60)),
-                      color: Static.buttonColor,
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Text(
-                        'Последние действия',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 32,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w700),
-                      ),
+                Container(
+                  height: MediaQuery.of(context).size.height * 0.1,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(60),
+                        bottomRight: Radius.circular(60)),
+                    color: Static.buttonColor,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Text(
+                      'Последние действия',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 32,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w700),
                     ),
                   ),
                 ),
-                Expanded(
-                  child: ListView.builder(
-                      shrinkWrap: true,
-                      reverse: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: snapshot.data!.length,
-                      itemBuilder: (context, index) {
-                        // Map dataAtIndex = snapshot.data![index];
-                        TransactionModal dataAtIndex;
+                ListView.builder(
+                    shrinkWrap: true,
+                    reverse: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (context, index) {
+                      // Map dataAtIndex = snapshot.data![index];
+                      TransactionModal dataAtIndex;
+                      //
+                      try {
                         //
-                        try {
-                          //
-                          dataAtIndex = snapshot.data![index];
-                        } catch (e) {
-                          //
-                          return Container();
-                        }
+                        dataAtIndex = snapshot.data![index];
+                      } catch (e) {
+                        //
+                        return Container();
+                      }
 
-                        if (dataAtIndex.type == "Доход") {
-                          return IncomeTile(
-                            dataAtIndex.amount,
-                            dataAtIndex.note,
-                            dataAtIndex.date,
-                            index,
-                          );
-                        } else {
-                          return expenseTile(
-                            dataAtIndex.amount,
-                            dataAtIndex.note,
-                            dataAtIndex.date,
-                            index,
-                          );
-                          //   Text('hey');
-                          // }
-                        }
-                      }),
-                ),
+                      if (dataAtIndex.type == "Доход") {
+                        return IncomeTile(
+                          dataAtIndex.amount,
+                          dataAtIndex.note,
+                          dataAtIndex.date,
+                          index,
+                        );
+                      } else {
+                        return expenseTile(
+                          dataAtIndex.amount,
+                          dataAtIndex.note,
+                          dataAtIndex.date,
+                          index,
+                        );
+                        //   Text('hey');
+                        // }
+                      }
+                    }),
               ],
             );
           } else {

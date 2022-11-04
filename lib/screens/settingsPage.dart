@@ -165,7 +165,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           fontWeight: FontWeight.w700),
                     ),
                     Container(
-                      width: MediaQuery.of(context).size.width * 0.35,
+                      width: MediaQuery.of(context).size.width * 0.40,
                       child: DropdownButtonFormField(
                           icon: Icon(
                             Icons.flag,

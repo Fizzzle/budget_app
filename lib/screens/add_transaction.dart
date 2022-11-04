@@ -93,7 +93,7 @@ class _AddTransactionState extends State<AddTransaction> {
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly
                           ],
-                          keyboardType: TextInputType.none,
+                          keyboardType: TextInputType.number,
                           maxLength: 10,
                           decoration: InputDecoration(
                             // icon: Icon(
@@ -168,50 +168,50 @@ class _AddTransactionState extends State<AddTransaction> {
                           ),
                         ],
                       ),
-
-                      // SizedBox(
-                      //   height: size.height * 0.03,
-                      // ),
-                      // Container(
-                      //   width: double.infinity,
-                      //   child: ElevatedButton(
-                      //     onPressed: () async {
-                      //       //
-                      //       if (amount != null && note.isNotEmpty) {
-                      //         //
-                      //         DbHelper dbHelper = DbHelper();
-                      //         dbHelper.addData(amount!, selectedDate, note, type);
-                      //         Navigator.of(context).push(
-                      //           MaterialPageRoute(
-                      //             builder: (context) => HomePage(),
-                      //           ),
-                      //         );
-                      //         setState(() {
-                      //           track = !track;
-                      //         });
-                      //       } else {
-                      //         print("Not all Value Proveded");
-                      //       }
-                      //     },
-                      //     style: ElevatedButton.styleFrom(
-                      //       primary: Static.buttonColor, // background
-                      //     ),
-                      //     child: Padding(
-                      //       padding: const EdgeInsets.symmetric(vertical: 12.0),
-                      //       child: Text(
-                      //         "Внести",
-                      //         style: TextStyle(
-                      //             fontSize: 24, fontWeight: FontWeight.w700),
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
+                      SizedBox(
+                        height: size.height * 0.03,
+                      ),
+                      Container(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            //
+                            if (amount != null && note.isNotEmpty) {
+                              //
+                              DbHelper dbHelper = DbHelper();
+                              dbHelper.addData(
+                                  amount!, selectedDate, note, type);
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => HomePage(),
+                                ),
+                              );
+                              setState(() {
+                                track = !track;
+                              });
+                            } else {
+                              print("Not all Value Proveded");
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            primary: Static.buttonColor, // background
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 12.0),
+                            child: Text(
+                              "Внести",
+                              style: TextStyle(
+                                  fontSize: 24, fontWeight: FontWeight.w700),
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: size.height * 0.05,
-                ),
+                // SizedBox(
+                //   height: size.height * 0.05,
+                // ),
                 Container(
                   height: size.height * 0.6,
                   decoration: BoxDecoration(

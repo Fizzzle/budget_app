@@ -115,80 +115,73 @@ class _MainPageState extends State<MainPage> {
                     Navigator.of(context).push(
                         MaterialPageRoute(builder: (context) => HistryPage()));
                   },
-                  child: Stack(clipBehavior: Clip.none, children: [
-                    Container(
-                      width: size.width * 1,
-                      height: size.height * 0.26,
-                      margin: EdgeInsets.only(top: 22, right: 12, left: 12),
-                      child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            gradient: LinearGradient(
-                              colors: [
-                                Color.fromARGB(255, 0, 9, 107),
-                                // Color.fromARGB(255, 13, 28, 196),
-                                // Color.fromARGB(255, 102, 149, 237),
-                                Color.fromARGB(255, 0, 128, 255),
+                  child: Container(
+                    width: size.width * 1,
+                    margin: EdgeInsets.only(top: 22, right: 12, left: 12),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          gradient: LinearGradient(
+                            colors: [
+                              Color.fromARGB(255, 0, 9, 107),
+                              // Color.fromARGB(255, 13, 28, 196),
+                              // Color.fromARGB(255, 102, 149, 237),
+                              Color.fromARGB(255, 0, 128, 255),
+                            ],
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.black54,
+                                offset: const Offset(0.0, 4.0),
+                                blurRadius: 9.0,
+                                spreadRadius: 1)
+                          ]),
+                      padding:
+                          EdgeInsets.symmetric(vertical: 20, horizontal: 20.0),
+                      child: Column(
+                        children: [
+                          Text(
+                            'Общий Баланс',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 22, color: Colors.white),
+                          ),
+                          SizedBox(
+                            height: size.height * 0.02,
+                          ),
+                          FittedBox(
+                            child: Text(
+                              '${totalBalance} грн',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.w700,
+                                  color: totalBalance <= -1
+                                      ? Color.fromARGB(255, 229, 188, 187)
+                                      : totalBalance >= 2500
+                                          ? totalBalance >= 25000
+                                              ? Color.fromARGB(255, 52, 197, 57)
+                                              : Color.fromARGB(
+                                                  255, 107, 207, 111)
+                                          : Color.fromARGB(255, 194, 219, 194)),
+                            ),
+                          ),
+                          SizedBox(
+                            height: size.height * 0.02,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                cardIncome(totalIncome.toString()),
+                                cardExpens(totalExpense.toString())
                               ],
                             ),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.black54,
-                                  offset: const Offset(0.0, 4.0),
-                                  blurRadius: 9.0,
-                                  spreadRadius: 1)
-                            ]),
-                        padding: EdgeInsets.symmetric(
-                            vertical: 20, horizontal: 20.0),
-                        child: Column(
-                          children: [
-                            Text(
-                              'Общий Баланс',
-                              textAlign: TextAlign.center,
-                              style:
-                                  TextStyle(fontSize: 22, color: Colors.white),
-                            ),
-                            SizedBox(
-                              height: size.height * 0.02,
-                            ),
-                            FittedBox(
-                              child: Text(
-                                '${totalBalance} грн',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    fontSize: 30,
-                                    fontWeight: FontWeight.w700,
-                                    color: totalBalance <= -1
-                                        ? Color.fromARGB(255, 229, 188, 187)
-                                        : totalBalance >= 2500
-                                            ? totalBalance >= 25000
-                                                ? Color.fromARGB(
-                                                    255, 52, 197, 57)
-                                                : Color.fromARGB(
-                                                    255, 107, 207, 111)
-                                            : Color.fromARGB(
-                                                255, 194, 219, 194)),
-                              ),
-                            ),
-                            SizedBox(
-                              height: size.height * 0.02,
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  cardIncome(totalIncome.toString()),
-                                  cardExpens(totalExpense.toString())
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
+                          )
+                        ],
                       ),
                     ),
-                  ]),
+                  ),
                 ),
 
                 //
@@ -196,519 +189,536 @@ class _MainPageState extends State<MainPage> {
                 //
                 //
                 //
-                Expanded(
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.only(left: 15, right: 15, top: 20),
-                    child: Column(
-                      children: [
-                        Text(
-                          'Избранные категории',
-                          style: TextStyle(
-                              fontSize: size.height * 0.03,
-                              color: Colors.grey,
-                              fontWeight: FontWeight.w700),
+                Padding(
+                  padding: const EdgeInsets.only(left: 15, right: 15, top: 20),
+                  child: Column(
+                    children: [
+                      Text(
+                        'Избранные категории',
+                        style: TextStyle(
+                            fontSize: size.height * 0.03,
+                            color: Colors.grey,
+                            fontWeight: FontWeight.w700),
+                      ),
+                      SizedBox(
+                        height: size.height * 0.03,
+                      ),
+                      Container(
+                        // margin: EdgeInsets.only(left: 20, top: 20),
+                        height: size.height * 0.65,
+                        child: GridView.count(
+                          primary: true,
+                          childAspectRatio: 3 / 3,
+                          crossAxisSpacing: 20,
+                          mainAxisSpacing: 20,
+                          crossAxisCount: 3,
+                          children: [
+                            InkWell(
+                              onLongPress: () async {
+                                var answer = await testConfirmDialog(
+                                    context,
+                                    1,
+                                    "ВНИМАНИЕ",
+                                    "Меняем Название ${firstName}?");
+                                if (answer != null) {
+                                  setState(() {
+                                    firstName = '${firstName}';
+                                  });
+                                }
+                              },
+                              onTap: () {
+                                print('fuuu');
+                              },
+                              child: Container(
+                                padding: EdgeInsets.only(
+                                    top: size.height * 0.015,
+                                    bottom: size.height * 0.01),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(30),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color:
+                                              Color.fromARGB(31, 119, 119, 119),
+                                          offset: const Offset(0.0, 4.0),
+                                          blurRadius: 20.0,
+                                          spreadRadius: 2)
+                                    ]),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Image.asset(
+                                      'assets/icons/cat.png',
+                                      height: size.height * 0.07,
+                                    ),
+                                    SizedBox(
+                                      height: size.height * 0.01,
+                                    ),
+                                    Text(
+                                      (firstName == '' || firstName == null)
+                                          ? 'Животное'
+                                          : firstName,
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            InkWell(
+                              onLongPress: () async {
+                                var answer = await testConfirmDialog(
+                                    context,
+                                    2,
+                                    "ВНИМАНИЕ",
+                                    "Меняем Название ${secondName}?");
+                                if (answer != null) {
+                                  setState(() {
+                                    secondName = '${secondName}';
+                                  });
+                                }
+                              },
+                              onTap: () {
+                                print('fuuu');
+                              },
+                              child: Container(
+                                padding: EdgeInsets.only(
+                                    top: size.height * 0.015,
+                                    bottom: size.height * 0.01),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(30),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color:
+                                              Color.fromARGB(31, 119, 119, 119),
+                                          offset: const Offset(0.0, 4.0),
+                                          blurRadius: 20.0,
+                                          spreadRadius: 2)
+                                    ]),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Image.asset(
+                                      'assets/icons/car.png',
+                                      height: size.height * 0.07,
+                                    ),
+                                    SizedBox(
+                                      height: size.height * 0.01,
+                                    ),
+                                    Text(
+                                      (secondName == '' || secondName == null)
+                                          ? 'Машина'
+                                          : secondName,
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            InkWell(
+                              onLongPress: () {
+                                print('hey');
+                              },
+                              onTap: () {
+                                print('fuuu');
+                              },
+                              child: Container(
+                                padding: EdgeInsets.only(
+                                    top: size.height * 0.015,
+                                    bottom: size.height * 0.01),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(30),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color:
+                                              Color.fromARGB(31, 119, 119, 119),
+                                          offset: const Offset(0.0, 4.0),
+                                          blurRadius: 20.0,
+                                          spreadRadius: 2)
+                                    ]),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Image.asset(
+                                      'assets/icons/relax.png',
+                                      height: size.height * 0.07,
+                                    ),
+                                    SizedBox(
+                                      height: size.height * 0.01,
+                                    ),
+                                    Text(
+                                      'Отдых',
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            InkWell(
+                              onLongPress: () {
+                                print('hey');
+                              },
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => AddTransaction()));
+                              },
+                              child: Container(
+                                padding: EdgeInsets.only(
+                                    top: size.height * 0.015,
+                                    bottom: size.height * 0.01),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(30),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color:
+                                              Color.fromARGB(31, 119, 119, 119),
+                                          offset: const Offset(0.0, 4.0),
+                                          blurRadius: 20.0,
+                                          spreadRadius: 2)
+                                    ]),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Image.asset(
+                                      'assets/icons/joystick.png',
+                                      height: size.height * 0.07,
+                                    ),
+                                    SizedBox(
+                                      height: size.height * 0.01,
+                                    ),
+                                    Text(
+                                      'Хобби',
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            InkWell(
+                              onLongPress: () {
+                                print('hey');
+                              },
+                              onTap: () {
+                                print('fuuu');
+                              },
+                              child: Container(
+                                padding: EdgeInsets.only(
+                                    top: size.height * 0.015,
+                                    bottom: size.height * 0.01),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(30),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color:
+                                              Color.fromARGB(31, 119, 119, 119),
+                                          offset: const Offset(0.0, 4.0),
+                                          blurRadius: 20.0,
+                                          spreadRadius: 2)
+                                    ]),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Image.asset(
+                                      'assets/icons/study.png',
+                                      height: size.height * 0.07,
+                                    ),
+                                    SizedBox(
+                                      height: size.height * 0.01,
+                                    ),
+                                    Text(
+                                      'Учеба',
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            InkWell(
+                              onLongPress: () {
+                                print('hey');
+                              },
+                              onTap: () {
+                                print('fuuu');
+                              },
+                              child: Container(
+                                padding: EdgeInsets.only(
+                                    top: size.height * 0.015,
+                                    bottom: size.height * 0.01),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(30),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color:
+                                              Color.fromARGB(31, 119, 119, 119),
+                                          offset: const Offset(0.0, 4.0),
+                                          blurRadius: 20.0,
+                                          spreadRadius: 2)
+                                    ]),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Image.asset(
+                                      'assets/icons/taxi.png',
+                                      height: size.height * 0.07,
+                                    ),
+                                    SizedBox(
+                                      height: size.height * 0.01,
+                                    ),
+                                    Text(
+                                      'Такси',
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            InkWell(
+                              onLongPress: () {
+                                print('hey');
+                              },
+                              onTap: () {
+                                print('fuuu');
+                              },
+                              child: Container(
+                                padding: EdgeInsets.only(
+                                    top: size.height * 0.015,
+                                    bottom: size.height * 0.01),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(30),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color:
+                                              Color.fromARGB(31, 119, 119, 119),
+                                          offset: const Offset(0.0, 4.0),
+                                          blurRadius: 20.0,
+                                          spreadRadius: 2)
+                                    ]),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Image.asset(
+                                      'assets/icons/cat.png',
+                                      height: size.height * 0.07,
+                                    ),
+                                    SizedBox(
+                                      height: size.height * 0.01,
+                                    ),
+                                    Text(
+                                      'Животные',
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            InkWell(
+                              onLongPress: () {
+                                print('hey');
+                              },
+                              onTap: () {
+                                print('fuuu');
+                              },
+                              child: Container(
+                                padding: EdgeInsets.only(
+                                    top: size.height * 0.015,
+                                    bottom: size.height * 0.01),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(30),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color:
+                                              Color.fromARGB(31, 119, 119, 119),
+                                          offset: const Offset(0.0, 4.0),
+                                          blurRadius: 20.0,
+                                          spreadRadius: 2)
+                                    ]),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Image.asset(
+                                      'assets/icons/cat.png',
+                                      height: size.height * 0.07,
+                                    ),
+                                    SizedBox(
+                                      height: size.height * 0.01,
+                                    ),
+                                    Text(
+                                      'Животные',
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            InkWell(
+                              onLongPress: () {
+                                print('hey');
+                              },
+                              onTap: () {
+                                print('fuuu');
+                              },
+                              child: Container(
+                                padding: EdgeInsets.only(
+                                    top: size.height * 0.015,
+                                    bottom: size.height * 0.01),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(30),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color:
+                                              Color.fromARGB(31, 119, 119, 119),
+                                          offset: const Offset(0.0, 4.0),
+                                          blurRadius: 20.0,
+                                          spreadRadius: 2)
+                                    ]),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Image.asset(
+                                      'assets/icons/cat.png',
+                                      height: size.height * 0.07,
+                                    ),
+                                    SizedBox(
+                                      height: size.height * 0.01,
+                                    ),
+                                    Text(
+                                      'Животные',
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            InkWell(
+                              onLongPress: () {
+                                print('hey');
+                              },
+                              onTap: () {
+                                print('fuuu');
+                              },
+                              child: Container(
+                                padding: EdgeInsets.only(
+                                    top: size.height * 0.015,
+                                    bottom: size.height * 0.01),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(30),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color:
+                                              Color.fromARGB(31, 119, 119, 119),
+                                          offset: const Offset(0.0, 4.0),
+                                          blurRadius: 20.0,
+                                          spreadRadius: 2)
+                                    ]),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Image.asset(
+                                      'assets/icons/cat.png',
+                                      height: size.height * 0.07,
+                                    ),
+                                    SizedBox(
+                                      height: size.height * 0.01,
+                                    ),
+                                    Text(
+                                      'Животные',
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            InkWell(
+                              onLongPress: () {
+                                print('hey');
+                              },
+                              onTap: () {
+                                print('fuuu');
+                              },
+                              child: Container(
+                                padding: EdgeInsets.only(
+                                    top: size.height * 0.015,
+                                    bottom: size.height * 0.01),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(30),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color:
+                                              Color.fromARGB(31, 119, 119, 119),
+                                          offset: const Offset(0.0, 4.0),
+                                          blurRadius: 20.0,
+                                          spreadRadius: 2)
+                                    ]),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Image.asset(
+                                      'assets/icons/cat.png',
+                                      height: size.height * 0.07,
+                                    ),
+                                    SizedBox(
+                                      height: size.height * 0.01,
+                                    ),
+                                    Text(
+                                      'Животные',
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Container(),
+                            Container(),
+                            Container(),
+                            Container(),
+                            Container(),
+                            Container(),
+                          ],
                         ),
-                        SizedBox(
-                          height: size.height * 0.03,
-                        ),
-                        Container(
-                          // margin: EdgeInsets.only(left: 20, top: 20),
-                          height: size.height * 0.65,
-                          child: GridView.count(
-                            primary: true,
-                            childAspectRatio: 3 / 3,
-                            crossAxisSpacing: 20,
-                            mainAxisSpacing: 20,
-                            crossAxisCount: 3,
-                            children: [
-                              InkWell(
-                                onLongPress: () async {
-                                  var answer = await testConfirmDialog(
-                                      context,
-                                      1,
-                                      "ВНИМАНИЕ",
-                                      "Меняем Название ${firstName}?");
-                                  if (answer != null) {
-                                    setState(() {
-                                      firstName = '${firstName}';
-                                    });
-                                  }
-                                },
-                                onTap: () {
-                                  print('fuuu');
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.only(top: 15, bottom: 15),
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(30),
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: Color.fromARGB(
-                                                31, 119, 119, 119),
-                                            offset: const Offset(0.0, 4.0),
-                                            blurRadius: 20.0,
-                                            spreadRadius: 2)
-                                      ]),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Image.asset(
-                                        'assets/icons/cat.png',
-                                        height: size.height * 0.07,
-                                      ),
-                                      SizedBox(
-                                        height: size.height * 0.01,
-                                      ),
-                                      Text(
-                                        (firstName == '' || firstName == null)
-                                            ? 'Животное'
-                                            : firstName,
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w700),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              InkWell(
-                                onLongPress: () async {
-                                  var answer = await testConfirmDialog(
-                                      context,
-                                      2,
-                                      "ВНИМАНИЕ",
-                                      "Меняем Название ${secondName}?");
-                                  if (answer != null) {
-                                    setState(() {
-                                      secondName = '${secondName}';
-                                    });
-                                  }
-                                },
-                                onTap: () {
-                                  print('fuuu');
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.only(top: 15, bottom: 15),
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(30),
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: Color.fromARGB(
-                                                31, 119, 119, 119),
-                                            offset: const Offset(0.0, 4.0),
-                                            blurRadius: 20.0,
-                                            spreadRadius: 2)
-                                      ]),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Image.asset(
-                                        'assets/icons/car.png',
-                                        height: size.height * 0.07,
-                                      ),
-                                      SizedBox(
-                                        height: size.height * 0.01,
-                                      ),
-                                      Text(
-                                        (secondName == '' || secondName == null)
-                                            ? 'Машина'
-                                            : secondName,
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w700),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              InkWell(
-                                onLongPress: () {
-                                  print('hey');
-                                },
-                                onTap: () {
-                                  print('fuuu');
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.only(top: 15, bottom: 15),
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(30),
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: Color.fromARGB(
-                                                31, 119, 119, 119),
-                                            offset: const Offset(0.0, 4.0),
-                                            blurRadius: 20.0,
-                                            spreadRadius: 2)
-                                      ]),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Image.asset(
-                                        'assets/icons/relax.png',
-                                        height: size.height * 0.07,
-                                      ),
-                                      SizedBox(
-                                        height: size.height * 0.01,
-                                      ),
-                                      Text(
-                                        'Отдых',
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w700),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              InkWell(
-                                onLongPress: () {
-                                  print('hey');
-                                },
-                                onTap: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) => AddTransaction()));
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.only(top: 15, bottom: 15),
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(30),
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: Color.fromARGB(
-                                                31, 119, 119, 119),
-                                            offset: const Offset(0.0, 4.0),
-                                            blurRadius: 20.0,
-                                            spreadRadius: 2)
-                                      ]),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Image.asset(
-                                        'assets/icons/joystick.png',
-                                        height: size.height * 0.07,
-                                      ),
-                                      SizedBox(
-                                        height: size.height * 0.01,
-                                      ),
-                                      Text(
-                                        'Хобби',
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w700),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              InkWell(
-                                onLongPress: () {
-                                  print('hey');
-                                },
-                                onTap: () {
-                                  print('fuuu');
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.only(top: 15, bottom: 15),
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(30),
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: Color.fromARGB(
-                                                31, 119, 119, 119),
-                                            offset: const Offset(0.0, 4.0),
-                                            blurRadius: 20.0,
-                                            spreadRadius: 2)
-                                      ]),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Image.asset(
-                                        'assets/icons/study.png',
-                                        height: size.height * 0.07,
-                                      ),
-                                      SizedBox(
-                                        height: size.height * 0.01,
-                                      ),
-                                      Text(
-                                        'Учеба',
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w700),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              InkWell(
-                                onLongPress: () {
-                                  print('hey');
-                                },
-                                onTap: () {
-                                  print('fuuu');
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.only(top: 15, bottom: 15),
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(30),
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: Color.fromARGB(
-                                                31, 119, 119, 119),
-                                            offset: const Offset(0.0, 4.0),
-                                            blurRadius: 20.0,
-                                            spreadRadius: 2)
-                                      ]),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Image.asset(
-                                        'assets/icons/taxi.png',
-                                        height: size.height * 0.07,
-                                      ),
-                                      SizedBox(
-                                        height: size.height * 0.01,
-                                      ),
-                                      Text(
-                                        'Такси',
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w700),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              InkWell(
-                                onLongPress: () {
-                                  print('hey');
-                                },
-                                onTap: () {
-                                  print('fuuu');
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.only(top: 15, bottom: 15),
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(30),
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: Color.fromARGB(
-                                                31, 119, 119, 119),
-                                            offset: const Offset(0.0, 4.0),
-                                            blurRadius: 20.0,
-                                            spreadRadius: 2)
-                                      ]),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Image.asset(
-                                        'assets/icons/cat.png',
-                                        height: size.height * 0.07,
-                                      ),
-                                      SizedBox(
-                                        height: size.height * 0.01,
-                                      ),
-                                      Text(
-                                        'Животные',
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w700),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              InkWell(
-                                onLongPress: () {
-                                  print('hey');
-                                },
-                                onTap: () {
-                                  print('fuuu');
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.only(top: 15, bottom: 15),
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(30),
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: Color.fromARGB(
-                                                31, 119, 119, 119),
-                                            offset: const Offset(0.0, 4.0),
-                                            blurRadius: 20.0,
-                                            spreadRadius: 2)
-                                      ]),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Image.asset(
-                                        'assets/icons/cat.png',
-                                        height: size.height * 0.07,
-                                      ),
-                                      SizedBox(
-                                        height: size.height * 0.01,
-                                      ),
-                                      Text(
-                                        'Животные',
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w700),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              InkWell(
-                                onLongPress: () {
-                                  print('hey');
-                                },
-                                onTap: () {
-                                  print('fuuu');
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.only(top: 15, bottom: 15),
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(30),
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: Color.fromARGB(
-                                                31, 119, 119, 119),
-                                            offset: const Offset(0.0, 4.0),
-                                            blurRadius: 20.0,
-                                            spreadRadius: 2)
-                                      ]),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Image.asset(
-                                        'assets/icons/cat.png',
-                                        height: size.height * 0.07,
-                                      ),
-                                      SizedBox(
-                                        height: size.height * 0.01,
-                                      ),
-                                      Text(
-                                        'Животные',
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w700),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              InkWell(
-                                onLongPress: () {
-                                  print('hey');
-                                },
-                                onTap: () {
-                                  print('fuuu');
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.only(top: 15, bottom: 15),
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(30),
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: Color.fromARGB(
-                                                31, 119, 119, 119),
-                                            offset: const Offset(0.0, 4.0),
-                                            blurRadius: 20.0,
-                                            spreadRadius: 2)
-                                      ]),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Image.asset(
-                                        'assets/icons/cat.png',
-                                        height: size.height * 0.07,
-                                      ),
-                                      SizedBox(
-                                        height: size.height * 0.01,
-                                      ),
-                                      Text(
-                                        'Животные',
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w700),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              InkWell(
-                                onLongPress: () {
-                                  print('hey');
-                                },
-                                onTap: () {
-                                  print('fuuu');
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.only(top: 15, bottom: 15),
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(30),
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: Color.fromARGB(
-                                                31, 119, 119, 119),
-                                            offset: const Offset(0.0, 4.0),
-                                            blurRadius: 20.0,
-                                            spreadRadius: 2)
-                                      ]),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Image.asset(
-                                        'assets/icons/cat.png',
-                                        height: size.height * 0.07,
-                                      ),
-                                      SizedBox(
-                                        height: size.height * 0.01,
-                                      ),
-                                      Text(
-                                        'Животные',
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w700),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                                width: 10,
-                              ),
-                              SizedBox(
-                                height: 10,
-                                width: 10,
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
+                      )
+                    ],
                   ),
                 ),
               ],
